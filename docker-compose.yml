@@ -1,0 +1,26 @@
+# Optional: local PostgreSQL for testing the production DB engine.
+# Dev default is SQLite (no Docker needed). To use Postgres:
+#   docker compose up -d
+#   # then in backend/.env:
+#   DATABASE_URL=postgresql+asyncpg://upstream:upstream@localhost:5432/upstream
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: upstream-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: upstream
+      POSTGRES_PASSWORD: upstream
+      POSTGRES_DB: upstream
+    ports:
+      - "5432:5432"
+    volumes:
+      - upstream_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U upstream -d upstream"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  upstream_pgdata:
