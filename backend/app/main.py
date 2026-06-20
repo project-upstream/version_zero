@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -20,9 +22,20 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# Read CORS origins from environment variable or config default
+raw_origins = os.getenv("CORS_ORIGINS", "")
+if raw_origins:
+    origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+else:
+    origins = settings.cors_origins_list
+
+# Safeguard: ensure localhost is always available for local development
+if "http://localhost:3000" not in origins:
+    origins.append("http://localhost:3000")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
