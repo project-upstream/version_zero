@@ -246,11 +246,11 @@ pdf.set_text_color(148, 163, 184)
 pdf.cell(174, 6, "Upstream Capital Advisors  |  Confidential", align="L")
 
 # TOC on dark lower panel
-pdf.set_xy(18, 132)
-pdf.set_font("Helvetica", "B", 7.5)
+pdf.set_xy(18, 130)
+pdf.set_font("Helvetica", "B", 7)
 pdf.set_text_color(*GOLD)
 pdf.cell(174, 5, "CONTENTS")
-pdf.ln(5)
+pdf.ln(4)
 
 toc = [
     ("01", "Getting Started"),
@@ -265,20 +265,15 @@ toc = [
     ("10", "Settings"),
     ("11", "Glossary"),
 ]
-col = 0
 for num, title in toc:
-    if col == 0:
-        pdf.set_x(22)
-    else:
-        pdf.set_x(112)
-        pdf.set_y(pdf.get_y() - 6)
+    pdf.set_x(22)
     pdf.set_font("Helvetica", "B", 8.5)
     pdf.set_text_color(*GOLD)
-    pdf.cell(10, 6, num)
+    pdf.cell(12, 6.5, num)
+    # dotted leader line
     pdf.set_font("Helvetica", "", 8.5)
-    pdf.set_text_color(203, 213, 225)
-    pdf.cell(70, 6, title, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-    col = 1 - col
+    pdf.set_text_color(71, 85, 105)
+    pdf.cell(120, 6.5, title, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
 
 # ── 01 GETTING STARTED ───────────────────────────────────────────────────────
