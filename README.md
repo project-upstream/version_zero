@@ -4,11 +4,32 @@ A multi-tenant CRM for M&A / investment-banking deal sourcing. It productises th
 spreadsheets (Master List, Email Schedule, Contact List) into one connected system.
 
 - **Backend:** FastAPI + SQLAlchemy 2.0 (async) + Pydantic v2 + Alembic, JWT auth.
-- **Frontend:** Next.js 15 (App Router) + TypeScript + Tailwind + shadcn/ui + TanStack Query.
+- **Frontend:** Next.js 16 (App Router) + TypeScript + Tailwind v4 + shadcn/ui + TanStack Query.
 - **DB:** SQLite in dev, PostgreSQL in prod — one `DATABASE_URL` switches the engine.
 
 The full spec is in [`plan.md`](plan.md); always-on agent context is in [`CLAUDE.md`](CLAUDE.md);
 build status is tracked in [`PROGRESS.md`](PROGRESS.md).
+
+## Live Application
+
+| | URL |
+|---|---|
+| **Frontend** | https://frontend-navy-pi-11.vercel.app |
+| **API / Docs** | https://upstream-api-production-0a58.up.railway.app/docs |
+
+### Login Credentials
+
+> Password for all accounts: **`Passw0rd!`**
+
+| Email | Role | Access |
+|---|---|---|
+| `partner@upstream.test` | Partner | All mandates, analytics, team management |
+| `analyst1@upstream.test` | Analyst | Assigned mandates only |
+| `analyst2@upstream.test` | Analyst | Assigned mandates only |
+| `associate1@upstream.test` | Associate | Assigned mandates only |
+| `associate2@upstream.test` | Associate | Assigned mandates only |
+
+See [`docs/Project_Upstream_User_Guide.pdf`](docs/Project_Upstream_User_Guide.pdf) for the full user guide.
 
 ## Prerequisites
 - Python 3.11+
@@ -99,6 +120,15 @@ Set environment variables:
   frontend and backend share a site, e.g. local dev.)
 
 Release step: `alembic upgrade head` before starting `uvicorn app.main:app` (bind `$PORT`).
+If you want the Railway Postgres to start with the same demo tables/data as local dev, run the
+seed script once after the migration step:
+
+```bash
+python -m app.seed.seed --reset
+```
+
+That populates the backend tables inside the Railway database. The local SQLite file itself is not
+deployed; only the schema/data created by migrations and seed are.
 
 ### Frontend (Vercel)
 - `NEXT_PUBLIC_API_URL=https://<your-backend-host>` (the API origin; the typed client sends
