@@ -3,7 +3,7 @@
  * Expanded per phase; Phase 0 only needs auth/role + the core enums for the design system.
  */
 
-export type Role = "ANALYST" | "ASSOCIATE" | "PARTNER";
+export type Role = "ANALYST" | "PARTNER";
 
 export type CompanyStatus =
   | "NOT_CONTACTED"

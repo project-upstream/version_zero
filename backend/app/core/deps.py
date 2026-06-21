@@ -89,7 +89,7 @@ async def visible_mandate_ids(user: User, db: AsyncSession) -> list[int] | None:
     """Return the mandate IDs the user may see.
 
     Partners → None (= all mandates; callers skip the WHERE clause).
-    Analysts / Associates → list of mandate IDs via mandate_assignments.
+    Analysts → list of mandate IDs via mandate_assignments.
     """
     if user.role == UserRole.PARTNER:
         return None

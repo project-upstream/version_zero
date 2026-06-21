@@ -20,7 +20,6 @@ import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const ROLE_LABEL: Record<string, string> = {
   ANALYST: "Analyst",
-  ASSOCIATE: "Associate",
   PARTNER: "Partner",
 };
 
