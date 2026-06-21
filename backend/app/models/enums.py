@@ -5,7 +5,6 @@ import enum
 
 class UserRole(str, enum.Enum):
     ANALYST = "ANALYST"
-    ASSOCIATE = "ASSOCIATE"
     PARTNER = "PARTNER"
 
 

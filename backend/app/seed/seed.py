@@ -6,7 +6,7 @@ Usage:
     python -m app.seed.seed --reset   # drop + recreate + seed
 
 Produces:
-  1 firm · 5 users (1 PARTNER, 2 ANALYSTS, 2 ASSOCIATES)
+  1 firm · 5 users (1 PARTNER, 4 ANALYSTS)
   4 mandates · ~120 companies · 1-3 contacts each · realistic schedule mix
   ~8 deliberate cross-mandate duplicates · demo logins printed
 """
@@ -65,8 +65,8 @@ USERS_SPEC = [
     ("Arjun Mehta", "partner@upstream.test", UserRole.PARTNER),
     ("Priya Sharma", "analyst1@upstream.test", UserRole.ANALYST),
     ("Rahul Gupta", "analyst2@upstream.test", UserRole.ANALYST),
-    ("Neha Patel", "associate1@upstream.test", UserRole.ASSOCIATE),
-    ("Vikram Singh", "associate2@upstream.test", UserRole.ASSOCIATE),
+    ("Neha Patel", "analyst3@upstream.test", UserRole.ANALYST),
+    ("Vikram Singh", "analyst4@upstream.test", UserRole.ANALYST),
 ]
 
 MANDATES_SPEC = [
@@ -76,7 +76,7 @@ MANDATES_SPEC = [
         "type": MandateType.SELL_SIDE,
         "exchange_rate": Decimal("83.12"),
         "exchange_rate_date": date(2024, 3, 1),
-        "assigned_indices": [1, 3],  # analyst1, associate1
+        "assigned_indices": [1, 3],  # analyst1, analyst3
     },
     {
         "client_name": "IndInfra Capital",
@@ -84,7 +84,7 @@ MANDATES_SPEC = [
         "type": MandateType.BUY_SIDE,
         "exchange_rate": Decimal("83.45"),
         "exchange_rate_date": date(2024, 3, 15),
-        "assigned_indices": [2, 3],  # analyst2, associate1
+        "assigned_indices": [2, 3],  # analyst2, analyst3
     },
     {
         "client_name": "GreenGrow Ventures",
@@ -92,7 +92,7 @@ MANDATES_SPEC = [
         "type": MandateType.CAPITAL_RAISE,
         "exchange_rate": Decimal("83.20"),
         "exchange_rate_date": date(2024, 2, 28),
-        "assigned_indices": [1, 4],  # analyst1, associate2
+        "assigned_indices": [1, 4],  # analyst1, analyst4
     },
     {
         "client_name": "Minda Group",
@@ -100,7 +100,7 @@ MANDATES_SPEC = [
         "type": MandateType.SELL_SIDE,
         "exchange_rate": Decimal("83.30"),
         "exchange_rate_date": date(2024, 3, 10),
-        "assigned_indices": [2, 4],  # analyst2, associate2
+        "assigned_indices": [2, 4],  # analyst2, analyst4
     },
 ]
 
@@ -509,7 +509,7 @@ def run_seed(session: Session) -> None:
     # ── Helper: pick analyst for a mandate ───────────────────────────────────
     def analyst_for(mandate_idx: int) -> User:
         assigned = MANDATES_SPEC[mandate_idx]["assigned_indices"]
-        # First assigned user is the analyst/associate
+        # First assigned user is the analyst
         return users[assigned[0]]
 
     # ── Companies per mandate ────────────────────────────────────────────────
@@ -553,7 +553,7 @@ def run_seed(session: Session) -> None:
     print("  Seed complete")
     print(sep)
     print(f"  Firm:       {firm.name}")
-    print(f"  Users:      {len(users)} (1 partner, 2 analysts, 2 associates)")
+    print(f"  Users:      {len(users)} (1 partner, 4 analysts)")
     print(f"  Mandates:   {len(mandates)}")
     print(f"  Companies:  {company_count} (incl. ~8 cross-mandate dupes)")
     print(f"  Contacts:   {contact_count}")

@@ -26,8 +26,8 @@ build status is tracked in [`PROGRESS.md`](PROGRESS.md).
 | `partner@upstream.test` | Partner | All mandates, analytics, team management |
 | `analyst1@upstream.test` | Analyst | Assigned mandates only |
 | `analyst2@upstream.test` | Analyst | Assigned mandates only |
-| `associate1@upstream.test` | Associate | Assigned mandates only |
-| `associate2@upstream.test` | Associate | Assigned mandates only |
+| `analyst3@upstream.test` | Analyst | Assigned mandates only |
+| `analyst4@upstream.test` | Analyst | Assigned mandates only |
 
 See [`docs/Project_Upstream_User_Guide.pdf`](docs/Project_Upstream_User_Guide.pdf) for the full user guide.
 
