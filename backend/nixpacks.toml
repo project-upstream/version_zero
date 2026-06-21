@@ -1,0 +1,1 @@
+# Let nixpacks use its default Python install (creates venv + pip install .)
